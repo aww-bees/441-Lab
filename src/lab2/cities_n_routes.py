@@ -33,7 +33,13 @@ def get_routes(city_names):
     :return: A list of tuples representing all possible links between cities/ pairs of cities, 
             each item in the list (a link) represents a route between two cities.
     """
-    pass
+    city_pairs=[]
+    for i in city_names:
+        for j in city_names:
+            if i==j: continue
+            city_pairs.append((city_names[i], city_names[j]))
+    return city_pairs
+
 
 
 # TODO: Fix variable names
