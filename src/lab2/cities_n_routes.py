@@ -15,10 +15,14 @@ def get_randomly_spread_cities(size, n_cities):
     
     :param size: the size of the map as a tuple of 2 integers
     :param n_cities: The number of cities to generate
-    :return: A list of cities with random x and y coordinates.
+    :return: A list of tuples, each representing a city, with random x and y coordinates.
     """
     # Consider the condition where x size and y size are different
-    pass
+    coordinate_list=[]
+    for i in n_cities:
+        coord=(random.random(0, size[0]), random.random(0, size[1]))
+        coordinate_list.append(coord)
+    return coordinate_list
 
 def get_routes(city_names):
     """
