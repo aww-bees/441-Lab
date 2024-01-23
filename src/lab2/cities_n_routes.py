@@ -17,8 +17,6 @@ def get_randomly_spread_cities(size, n_cities):
     :param n_cities: The number of cities to generate
     :return: A list of tuples, each representing a city, with random x and y coordinates.
     """
-    # Consider the condition where x size and y size are different
-
     return [(random.randint(1, size[0]), random.randint(1, size[1]))
             for i in range(n_cities)]
 
@@ -32,7 +30,6 @@ def get_routes(city_names):
     :return: A list of tuples representing all possible links between cities/ pairs of cities, 
             each item in the list (a link) represents a route between two cities.
     """
-
     return list(itertools.combinations(city_names, 2))
 
 
