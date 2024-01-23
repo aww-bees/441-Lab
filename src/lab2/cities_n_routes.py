@@ -19,8 +19,8 @@ def get_randomly_spread_cities(size, n_cities):
     """
     # Consider the condition where x size and y size are different
     coordinate_list=[]
-    for i in n_cities:
-        coord=(random.random(0, size[0]), random.random(0, size[1]))
+    for i in range(n_cities):
+        coord=(random.randrange(0, size[0]), random.randrange(0, size[1]))
         coordinate_list.append(coord)
     return coordinate_list
 
@@ -37,7 +37,8 @@ def get_routes(city_names):
     for i in city_names:
         for j in city_names:
             if i==j: continue
-            city_pairs.append((city_names[i], city_names[j]))
+            pair=(city_names[i], city_names[j])
+            city_pairs.append(pair)
     return city_pairs
 
 
