@@ -39,16 +39,26 @@ def get_route_cost(route_coordinate, game_map):
     :return: a floating point number representing the cost of the route
     """
     # Build a path from start to end that looks like [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 4)]
-    
+    #Increments the x or y in the correct direction of the end destination to create the path. 
     city1=route_coordinate[0]
     city2=route_coordinate[1]
-    path=[city1]
-    while city1[0]>city2[0] and city1[1]>city2[1]:
-      city1[0]+=1; city1[1]+=1
-      path.append[city1]
     
-        
-
+    city1x=city1[0]
+    city1y=city1[1]
+    movex=1 if city1[0]<=city2[0] else -1
+    movey=1 if city1[1]<=city2[1] else -1
+    path=[city1]
+    while city1x!=city2[0] or city1y!=city2[1]:
+        if (city1x!=city2[0]) and (city1y!=city2[1]):
+            city1x+=movex
+            city1y+=movey
+        elif city1x!=city2[0]:
+            city1x+=movex
+        elif city1y!=city2[1]:
+            city1y+=movey
+        path.append([city1x, city1y])
+    #Below is a print statement used for checking if the given cost is reasonable
+    #print("City 1: ", city1, "City 2: ", city2, "\nCost: ", game_map[tuple(zip(*path))].sum())
     return game_map[tuple(zip(*path))].sum()
 
 
