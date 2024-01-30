@@ -43,9 +43,27 @@ class AiPlayer(Player):
     def __init__(self, name):
         super().__init__(name)
         self.initial_weapon = random_weapon_select()
+        self.agentGuess=-1
+        self.round=0
     
     def weapon_selecting_strategy(self):
-        pass
+        if len(self.opponent_choices) == 0: 
+            #first round, select a random weapon
+            return self.initial_weapon
+        self.round=self.round+1             #counts rounds for mimic detection
+        last_opp_choice=self.opponent_choices[-1]
+        if (self.agentGuess==0):            
+            #if the agent is known to be using simple or switch, this may run
+            return last_opp_choice+1 if last_opp_choice<2 else 0
+        elif (self.agentGuess==1):          
+            #if the agent is known to be a mimic, this runs
+            return self.my_choices[-1]+1 if self.my_choices[-1]<2 else 0
+        
+        
+        if (self.round>4):                  
+            #this runs to attempt to detect a mimic
+            self.agentGuess=1 if (self.opponent_choices[-1]==self.my_choices[-2] and self.opponent_choices[-2]==self.my_choices[-3]) else 0
+        return last_opp_choice+1 if last_opp_choice<2 else 0        #if all else fails, run whatever beats the opponent's last play
 
 
 if __name__ == '__main__':
@@ -58,4 +76,4 @@ if __name__ == '__main__':
             else:
                 final_tally[agent] += tally[0]/sum(tally)
 
-    print("Final tally: ", final_tally)  
+    print("Final tally: ", final_tally)
