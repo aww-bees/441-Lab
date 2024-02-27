@@ -5,7 +5,7 @@ import numpy as np
 def get_elevation(size):
     xpix, ypix = size
     elevation = np.array([])
-    noise=PerlinNoise(octaves=50, seed=22)
+    noise=PerlinNoise(octaves=5, seed=22)
     xpix, ypix=size[0], size[1]
     elevation=np.array([[noise([i/xpix, j/ypix])
                          for j in range(ypix)]

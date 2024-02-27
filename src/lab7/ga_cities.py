@@ -20,16 +20,28 @@ from pathlib import Path
 sys.path.append(str((Path(__file__) / ".." / ".." / "..").resolve().absolute()))
 
 from src.lab5.landscape import elevation_to_rgba
+from src.lab5.landscape import get_elevation
 
 
 def game_fitness(cities, idx, elevation, size):
-    fitness = 0.0001  # Do not return a fitness of 0, it will mess up the algorithm.
+    fitness = 1  # Do not return a fitness of 0, it will mess up the algorithm.
     """
     Create your fitness function here to fulfill the following criteria:
     1. The cities should not be under water
     2. The cities should have a realistic distribution across the landscape
     3. The cities may also not be on top of mountains or on top of each other
-    """
+    """    
+    for i in cities:
+        x=i%size[0]
+        y=(i-x)/size[0]
+        if elevation[int(x),int(y)]<.1 or elevation[int(x),int(y)]>.9: 
+            fitness-=.1
+        for j in cities:
+            if i==j:
+                   continue
+            if abs(i-j)<20 or i+size[1]==j or i-size[1]==j:
+                fitness-=.1
+
     return fitness
 
 
@@ -87,6 +99,14 @@ def solution_to_cities(solution, size):
     :param solution: a solution to GA
     :param size: the size of the grid/map
     :return: The cities are being returned as a list of lists.
+
+    x, y = y*size[1]+x
+
+    x x x x x
+    x x x x x
+    x x o x x
+    x x x x x
+    (3,3) = [12] <-pixel location
     """
     cities = np.array(
         list(map(lambda x: [int(x / size[0]), int(x % size[1])], solution))
@@ -110,10 +130,10 @@ def show_cities(cities, landscape_pic, cmap="gist_earth"):
 
 if __name__ == "__main__":
     print("Initial Population")
-
+    
     size = 100, 100
     n_cities = 10
-    elevation = []
+    elevation = get_elevation(size)
     """ initialize elevation here from your previous code"""
     # normalize landscape
     elevation = np.array(elevation)
@@ -137,9 +157,9 @@ if __name__ == "__main__":
     print("Final Population")
 
     # Show the best solution after the GA finishes running.
-    cities = ga_instance.best_solution()[0]
-    cities_t = solution_to_cities(cities, size)
-    plt.imshow(landscape_pic, cmap="gist_earth")
+    better_cities = ga_instance.best_solution()[0]
+    cities_t = solution_to_cities(better_cities, size)
+    plt.imshow(landscape_pic, cmap="gnuplot2")
     plt.plot(cities_t[:, 1], cities_t[:, 0], "r.")
     plt.show()
     print(fitness_function(cities, 0))
