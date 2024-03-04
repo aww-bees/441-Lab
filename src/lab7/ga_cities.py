@@ -34,14 +34,13 @@ def game_fitness(cities, idx, elevation, size):
     for i in cities:
         x=i%size[0]
         y=(i-x)/size[0]
-        if elevation[int(x),int(y)]<.1 or elevation[int(x),int(y)]>.9: 
+        if elevation[int(x),int(y)]<.3 or elevation[int(x),int(y)]>.7: 
             fitness-=.1
         for j in cities:
             if i==j:
                    continue
             if abs(i-j)<20 or i+size[1]==j or i-size[1]==j:
                 fitness-=.1
-
     return fitness
 
 
