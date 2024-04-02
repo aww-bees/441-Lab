@@ -74,7 +74,20 @@ def run_episodes(n_episodes):
         Return the action values as a dictionary of dictionaries where the keys are states and 
             the values are dictionaries of actions and their values.
     '''
-
+    my_dict={}
+    #AAAAAAAAAAAAAAAAAAAAA
+    player=PyGameRandomCombatPlayer("Spunch")
+    opponent=PyGameComputerCombatPlayer("Eeeeeeeeeeeeeevil")
+    j=0
+    for i in range(n_episodes):
+        season_two=run_random_episode(player, opponent)
+        future_history=get_history_returns(season_two)
+        my_iter=iter(future_history.items())
+        for _ in future_history:
+            state, action, reward = next(my_iter)
+            my_dict[j][state] = {action, reward}
+            j=j+1
+        
     return action_values
 
 
