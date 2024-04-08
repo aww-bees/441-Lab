@@ -80,14 +80,13 @@ def run_episodes(n_episodes):
     opponent=PyGameComputerCombatPlayer("Eeeeeeeeeeeeeevil")
     j=0
     for i in range(n_episodes):
-        season_two=run_random_episode(player, opponent)
-        future_history=get_history_returns(season_two)
-        my_iter=iter(future_history.items())
-        for _ in future_history:
-            state, action, reward = next(my_iter)
-            my_dict[j][state] = {action, reward}
-            j=j+1
-        
+        future_history=run_random_episode(player, opponent)
+        returns = get_history_returns(future_history)
+        action_values=defaultdict(dict)
+        for states, outer_action in returns.items():
+            for inner_action, value in outer_action.items():
+                action_values[states][inner_action]=value/n_episodes
+            
     return action_values
 
 
@@ -112,7 +111,7 @@ def test_policy(policy):
 
 
 if __name__ == "__main__":
-    action_values = run_episodes(10000)
+    action_values = run_episodes(1000)
     print(action_values)
     optimal_policy = get_optimal_policy(action_values)
     print(optimal_policy)

@@ -19,12 +19,15 @@ def run_episode(player1, player2):
         run_turn(currentGame, player1, player2)
         health_tuple=(player1.health, player2.health)
         reward=1 if player1.health>player2.health else 0
-        if (player1.weapon==player2.weapon+1 or (player1.weapon==2 and player2.weapon==0)):
+        if currentGame.round>100:
+            break
+        if (player1.weapon==player2.weapon-1 or (player1.weapon==0 and player2.weapon==2)):
             reward=1
         elif (player1.weapon==player2.weapon):
             reward=.5
         else:
             reward=0
+
 
         season_one.append((player1.weapon, health_tuple, reward))
     return season_one
