@@ -1,12 +1,15 @@
 import pygame
 from pathlib import Path
 
-from lab11.sprite import Sprite
-from lab11.turn_combat import CombatPlayer, Combat
-from lab11.pygame_ai_player import PyGameAICombatPlayer
-from lab11.pygame_human_player import PyGameHumanCombatPlayer
+from sprite import Sprite
+from turn_combat import CombatPlayer, Combat
+from pygame_ai_player import PyGameAICombatPlayer
+from pygame_human_player import PyGameHumanCombatPlayer
+from generate_sprites import generate_bandit
 
-AI_SPRITE_PATH = Path("assets/ai.png")
+# REPLACE LATER FOR AI SPRITE
+generate_bandit()
+AI_SPRITE_PATH = Path("bandit_sprite.png")
 
 pygame.font.init()
 game_font = pygame.font.SysFont("Comic Sans MS", 15)
@@ -50,10 +53,10 @@ def run_turn(currentGame, player, opponent):
 
 def run_pygame_combat(combat_surface, screen, player_sprite):
     currentGame = Combat()
-    #player = PyGameHumanCombatPlayer("Legolas")
+    player = PyGameHumanCombatPlayer("Legolas")
     """ Add a line below that will reset the player object
     to an instance of the PyGameAICombatPlayer class"""
-    player = PyGameAICombatPlayer("Legolas")
+    #player = PyGameAICombatPlayer("Legolas")
                                   
     opponent = PyGameComputerCombatPlayer("Computer")
     opponent_sprite = Sprite(
@@ -65,3 +68,7 @@ def run_pygame_combat(combat_surface, screen, player_sprite):
         draw_combat_on_window(combat_surface, screen, player_sprite, opponent_sprite)
 
         run_turn(currentGame, player, opponent)
+    if player.health <= 0 and opponent.health > 0:
+        return False
+    else:
+        return True

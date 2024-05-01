@@ -1,5 +1,6 @@
 """ Create PyGameAIPlayer class here"""
 import random
+from turn_combat import CombatPlayer
 import pygame
 
 class PyGameAIPlayer:
@@ -13,7 +14,7 @@ class PyGameAIPlayer:
 """ Create PyGameAICombatPlayer class here"""
 
 
-class PyGameAICombatPlayer:
+class PyGameAICombatPlayer(CombatPlayer):
     def __init__(self, name):
         super().__init__(name)
 

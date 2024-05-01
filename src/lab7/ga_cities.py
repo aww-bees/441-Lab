@@ -24,7 +24,7 @@ from src.lab5.landscape import get_elevation
 
 
 def game_fitness(solution, idx, elevation, size):
-    fitness = 0.0001  # Do not return a fitness of 0, it will mess up the algorithm.
+    fitness = .1  # Do not return a fitness of 0, it will mess up the algorithm.
     """
     Create your fitness function here to fulfill the following criteria:
     1. The cities should not be under water
@@ -35,12 +35,12 @@ def game_fitness(solution, idx, elevation, size):
         x=i%size[0]
         y=(i-x)/size[0]
         if elevation[int(x),int(y)]<.3 or elevation[int(x),int(y)]>.7: 
-            fitness-=.1
+            fitness+=.1
         for j in cities:
             if i==j:
                    continue
             if abs(i-j)<20 or i+size[1]==j or i-size[1]==j:
-                fitness-=.1
+                fitness+=.1
     return fitness
 
 
